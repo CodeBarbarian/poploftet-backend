@@ -1,0 +1,15 @@
+version: '3.0'
+
+services:
+  database:
+    build:
+      context: ./database
+    environment:
+      - MYSQL_DATABASE=developer
+      - MYSQL_USER=developer
+      - MYSQL_PASSWORD=developer
+      - MYSQL_ROOT_PASSWORD=developer
+    volumes:
+      - ./database/storage:/var/lib/mysql
+    ports:
+      - "3306:3306"

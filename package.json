@@ -1,0 +1,33 @@
+{
+  "name": "poploftet-backend",
+  "version": "1.0.0",
+  "description": "Backend for Poploftet",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodeBarbarian/poploftet-backend.git"
+  },
+  "keywords": [
+    "vinyl",
+    "lp",
+    "database"
+  ],
+  "author": "Morten Haugstad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CodeBarbarian/poploftet-backend/issues"
+  },
+  "homepage": "https://github.com/CodeBarbarian/poploftet-backend#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^11.0.0",
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "log-timestamp": "^0.3.0",
+    "mysql": "^2.18.1",
+    "validator": "^13.7.0"
+  }
+}
