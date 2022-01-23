@@ -1,19 +1,11 @@
 /**
  * Including required modules
  */
-let mysql = require('mysql');
+const database = require('../Library/database');
 const Helper = require('../Library/functions');
 const Validator = require('validator');
 
-/**
- * Let us just connect to the mysql database
- */
-let connection = mysql.createConnection({
-    host: process.env.DB_HOSTNAME,
-    user: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE
-});
+let connection = database;
 
 async function getLabel() {
     return new Promise((resolve, reject) => {

@@ -1,17 +1,6 @@
-/**
- * Including required modules
- */
-let mysql = require('mysql');
+const database = require('../Library/database');
+let connection = database;
 
-/**
- * Let us just connect to the mysql database
- */
-let connection = mysql.createConnection({
-    host: process.env.DB_HOSTNAME,
-    user: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE
-});
 
 async function getAllAlbums() {
     return new Promise((resolve, reject) => {
