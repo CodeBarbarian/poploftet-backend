@@ -77,10 +77,29 @@ const getVinylStatistics = async (req, res, next) => {
     }
 }
 
+const patchVinyl = async (req, res, next) => {
+    var VinylData = req.body[0];
+    var PatchData = VinylData.patch;
+
+    /**
+     * Serious validation is needed here, but this needs to be super user only
+     */
+    console.log(PatchData.where.id.length)
+
+    var returnObject = []
+
+    for (var i = 0; i < PatchData.where.id.length; i++) {
+        returnObject.push(`${PatchData.action} ${PatchData.table} ${PatchData.query} WHERE id = ${PatchData.where.id[i]}`);
+    }
+    
+    res.json(returnObject);
+};
+
 module.exports = {
     getVinyl,
     getVinylByID,
     getVinylInformationByID,
     postVinyl,
-    getVinylStatistics
+    getVinylStatistics,
+    patchVinyl
 }

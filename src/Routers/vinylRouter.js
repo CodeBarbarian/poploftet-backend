@@ -34,8 +34,7 @@ router.get('/vinyl/stats', Controller.getVinylStatistics);
 router.get('/vinyl/:id', Controller.getVinylByID);
 router.get('/vinyl/information/:id', Controller.getVinylInformationByID);
 
-
-
+router.patch('/vinyl', Controller.patchVinyl);
 router.post('/vinyl', Controller.postVinyl);
 /**
  * Export the router
