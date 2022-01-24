@@ -2,46 +2,53 @@
  * Including required modules
  */
 const database = require('../Library/database');
-const Helper = require('../Library/functions');
+const Helper = require('../Library/haugstad');
 const Validator = require('validator');
 
-let connection = database;
 
-async function getLabel() {
-    return new Promise((resolve, reject) => {
-        let stmt = `SELECT * FROM recordlabels`;
+/**
+ * Middleware function for retrieving labels from the database
+ * @returns Promise()
+ */
+const getLabel = async(table) => {
+    var LabelData = [];
 
-        connection.query(stmt, (error, results, fields) => {
-            if (error) {
-                reject(console.error(error.message));
-            }
-
-            resolve(results);
-        });
+    await database.getAll(table).then((result) => {
+        LabelData = result;
     });
+    
+    return LabelData;
 }
 
-async function getLabelByID(id) {
-    return new Promise((resolve, reject) => {
-        let stmt = `SELECT * FROM recordlabels WHERE id = ?`;
-        let stmtvalues = [id];
+/**
+ * Retrieve record labels by id from the database
+ * 
+ * @param {*} id 
+ * @returns Promise()
+ */
+const getLabelByID = async(table, id) => {
+    var LabelData = [];
 
-        connection.query(stmt, stmtvalues, (error, results, fields) => {
-            if (error) {
-                reject(console.error(error.message));
-            }
+    await database.getEntryByID(table, id).then((result) => {
+        LabelData = result;
+    })
 
-            resolve(results);
-        });
-    });
-}
+    return LabelData;
+};
 
+
+/**
+ * Retrieve labels by name from the database
+ * 
+ * @param {*} name 
+ * @returns Promise()
+ */
 async function getLabelByName(name) {
     return new Promise((resolve, reject) => {
         let stmt = `SELECT * FROM recordlabels WHERE name = ?`;
         let stmtvalues = [name];
 
-        connection.query(stmt, stmtvalues, (error, results, fields) => {
+        database.connection.query(stmt, stmtvalues, (error, results, fields) => {
             if (error) {
                 reject(console.error(error.message));
             }
@@ -58,43 +65,25 @@ async function getLabelByName(name) {
  * 
  * @param {*} id 
  * @param {*} data 
- * @returns 
+ * @returns Promise()
  */
-async function putLabel(id, data) {
-    // Check if label exists
-    var LabelData = []
-    
-    await getLabelByID(id).then((result) => {
-        LabelData = result
-    })
+const updateLabel = async(table, id, data) => {
+    var LabelData = [];
 
-    console.log({
-        "change-from":LabelData,
-        "change-to":data[0]
-    })
-    if (Helper.isEmpty(LabelData)) {
-        // Label does not exist
-        console.log(`Label does not match id ${id}`);
-    } else {
-        if (!Validator.matches(data[0].name, "^[a-zA-Z0-9_\.\-\\s]*$")) {
-            console.log(`Name ${data[0].name} is not valid`);
-        } else {
-            return new Promise((resolve, reject) => {
-                let stmt = `UPDATE recordlabels SET name=? WHERE id=?`;
-                let stmtvalues = [data[0].name, id];
+    await database.updateEntryByID(table, id, data).then((result) => {
+        LabelData = result;
+    });
 
-                connection.query(stmt, stmtvalues, (error, results, fields) => {
-                    if (error) {
-                        reject(console.error(error.message));
-                    }
-
-                    resolve(results);
-                });
-            });
-        }
-    }
+    return LabelData;
 }
 
+/**
+ * Delete label from the database
+ * 
+ * @param {*} id 
+ * @returns Promise()
+ */
+/*
 async function deleteLabel(id) {
     // Check if label exists
     var LabelData = []
@@ -102,8 +91,6 @@ async function deleteLabel(id) {
     await getLabelByID(id).then((result) => {
         LabelData = result;
     });
-
-    
 
     if (Helper.isEmpty(LabelData)) {
         console.log(`No ID ${id} found`)
@@ -114,7 +101,7 @@ async function deleteLabel(id) {
             let stmt = `DELETE FROM recordlabels WHERE id = ?`;
             let stmtvalues = [id];
             
-            connection.query(stmt, stmtvalues, (error, results, fields) => {
+            database.connection.query(stmt, stmtvalues, (error, results, fields) => {
                 if (error) {
                     reject(console.error(error.message));
                 }
@@ -123,41 +110,40 @@ async function deleteLabel(id) {
             });
         })
     }
-    
 }
+*/ 
 
-async function postLabel(body) {
-    var LabelData = []
-    var RequestBody = body
-    
-    await getLabelByName(RequestBody.name).then((result) => {
+const deleteLabel = async(table, id) => {
+    var LabelData = [];
+
+    await database.deleteEntryByID(table, id).then((result) => {
         LabelData = result;
     });
 
-    if (Helper.isEmpty(LabelData)) {
-        return new Promise((resolve, reject) => {
-            console.log(`Trying to add ${RequestBody}`);
-    
-            let stmt = `INSERT INTO recordlabels (name) VALUES (?)`;
-            let stmtvalues = [RequestBody.name];
-            
-            connection.query(stmt, stmtvalues, (error, results, fields) => {
-                if (error) {
-                    reject(console.error(error.message));
-                }
-    
-                resolve(results);
-            });
-        })
-    }
-}
+    return LabelData;
+};
+/**
+ * Insert a new record in the label table in the database
+ * 
+ * @param {*} body 
+ * @returns Promise()
+ */
+const postLabel = async(table, data) => {
+    var LabelData = [];
+
+    await database.newEntry(table, data).then((result) => {
+        LabelData = result;
+    });
+
+    console.log(LabelData);
+    return LabelData;
+}; 
 
 module.exports = {
     getLabel,
     getLabelByID,
     getLabelByName,
-    putLabel,
+    updateLabel,
     deleteLabel,
     postLabel
-    
 }

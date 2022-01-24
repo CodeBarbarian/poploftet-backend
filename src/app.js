@@ -13,18 +13,18 @@ app.use(express.json());
 const tokenValidator = require('./Models/tokenModel');
 
 app.use(tokenValidator.validateToken);
+
+https://expressjs.com/en/advanced/best-practice-security.html
+Implement helmet
+
+Securing Nodejs applications
+https://dev.to/shaikhshahid/a-guide-to-securing-node-js-applications-4bcc
 */
-// Including the routerscd .
-const vinylRouter = require('./Routers/vinylRouter');
-const songRouter = require('./Routers/songRouter');
-const artistRouter = require('./Routers/artistRouter');
-const labelRouter = require('./Routers/labelRouter');
+// Including the router
+const Router = require('./Routers/Router');
 
 // Allows the API to use them
-app.use('/api/v1', vinylRouter);
-app.use('/api/v1', songRouter);
-app.use('/api/v1', artistRouter);
-app.use('/api/v1', labelRouter);
+app.use('/api/v1', Router);
 
 /**
  * Default route to display swagger

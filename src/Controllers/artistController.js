@@ -1,9 +1,7 @@
-const artistModel = require('../Models/artistModel');
-const albumModel = require('../Models/albumModel');
-const songModel = require('../Models/songModel');
 
 
-const Helper = require('../Library/functions');
+
+const Helper = require('../Library/haugstad');
 /**
  * Retrieve all the artists /artist
  * 
