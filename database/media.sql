@@ -11,3 +11,6 @@ CREATE TABLE `developer`.`media` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'general media table';
+
+ALTER TABLE `developer`.`media` 
+CHANGE COLUMN `created` `created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;

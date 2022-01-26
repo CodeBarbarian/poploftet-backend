@@ -19,7 +19,6 @@ let connection = mysql.createConnection({
 /**
  * Retrieves all rows in a given table in the database
  * 
- * 
  * @param {string} table 
  * @returns Promise
  */
@@ -67,8 +66,30 @@ async function getEntryByID(table, id) {
     });
 }
 
+async function getEntryByField(table, data, field) {
+    // Check if table, data and field is provided
+    if (Helper.isEmpty(table) || Helper.isEmpty(data) || Helper.isEmpty(field)) {
+        return false;
+    }
+
+    // Extract the data field from the data entry
+
+    return new Promise((resolve, reject) => {
+        let stmt = `SELECT * FROM ${table} WHERE ${field} = ?`;
+        let stmtvalues = [data];
+
+        connection.query(stmt, stmtvalues, (error, results, fields) => {
+            if (error) {
+                reject(console.error(error.message));
+            }
+
+            resolve(results);
+        });
+    });
+}
+
 async function updateEntryByID(table, id, data) {
-    var LabelData = [];
+    var MediaData = [];
     var FieldName = data[0].field;
     var FieldValue = data[0].value;
 
@@ -84,10 +105,10 @@ async function updateEntryByID(table, id, data) {
 
     // Check if id exists in the database
     await getEntryByID(table, id).then((result) => {
-        LabelData = result;
+        MediaData = result;
     });
 
-    if (Helper.isEmpty(LabelData)) {
+    if (Helper.isEmpty(MediaData)) {
         return false;
     }
 
@@ -117,18 +138,19 @@ async function updateEntryByID(table, id, data) {
     });
 }
 
+
 async function deleteEntryByID(table, id) {
-    var LabelData = [];
+    var EntryData = [];
 
     if (Helper.isEmpty(table) || Helper.isEmpty(id)) {
         return false;
     }
 
     await getEntryByID(table, id).then((result) => {
-        LabelData = result;
+        EntryData = result;
     });
 
-    if (Helper.isEmpty(LabelData)) {
+    if (Helper.isEmpty(EntryData)) {
         return false;
     }
 
@@ -174,8 +196,10 @@ async function newEntry(table, data) {
     
     return new Promise((resolve, reject) => {
         let stmt = `INSERT INTO ${table} (${fieldnames}) VALUES (?)`;
-        let stmtvalues = [fieldvalues.toString()]
+        let stmtvalues = [fieldvalues]
 
+        console.log(sqlstring.format(stmt, stmtvalues));
+        
         connection.query(stmt, stmtvalues, (error, results, fields) => {
 
             if (error) {
@@ -188,11 +212,14 @@ async function newEntry(table, data) {
     });
 }
 
+
+
 module.exports = {
     connection,
 
     getAll,
     getEntryByID,
+    getEntryByField,
     updateEntryByID,
     deleteEntryByID,
     newEntry

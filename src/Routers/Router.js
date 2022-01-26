@@ -7,12 +7,28 @@ const router = express.Router();
 /**
  * Including the controllers
  */
-const VinylController = require('../Controllers/vinylController');
+const MediaController = require('../Controllers/mediaController');
 
 /**
  * All the routes
  */
-router.get('/', VinylController.getVinyl);
+
+// Vinyl
+router.get('/vinyl', MediaController.getVinylAll);
+router.get('/vinyl/:id', MediaController.getVinylByID);
+router.post('/vinyl', MediaController.newVinylEntry);
+router.put('/vinyl/:id', MediaController.updateVinylByID);
+router.delete('/vinyl/:id', MediaController.deleteVinylByID);
+
+// Label
+router.get('/label', MediaController.getLabelAll);
+
+// Artists
+//router.get('artists', MediaController.getArtistAll);
+
+// Song
+
+
 
 /**
  * Exporting the router

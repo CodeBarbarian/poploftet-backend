@@ -1,0 +1,20 @@
+[
+    {
+        "fieldnames": [
+            "name",
+            "artist",
+            "released",
+            "genre",
+            "ean",
+            "label"
+        ],
+        "fieldvalues": [
+            "surface sounds",
+            "kaleo",
+            "2021",
+            "rock",
+            "EA628772.1",
+            "new elekstra"
+        ]
+    }
+]

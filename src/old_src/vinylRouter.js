@@ -1,20 +1,4 @@
 /**
- * VINYL should follow this format
- * 
- * GET /vinyl
- *      - list all vinyls
- * GET /vinyl/:id
- *      - list specific vinyl
- * POST /vinyl
- *      - Add another vinyl
- * DELETE /vinyl/:id
- *      - DElete Vinyl
- * 
- * UPDATE /vinyl/:id
-*/
-
-
-/**
  * Express to create the router
  */
 const express = require('express');
