@@ -4,7 +4,6 @@
 const Helper = require('./haugstad');
 let mysql = require('mysql');
 const Validator = require('validator');
-let sqlstring = require('sqlstring');
 
 /**
  * Let us just connect to the mysql database
@@ -66,6 +65,14 @@ async function getEntryByID(table, id) {
     });
 }
 
+/**
+ * get entry in database based on field and value
+ * 
+ * @param {*} table 
+ * @param {*} data 
+ * @param {*} field 
+ * @returns 
+ */
 async function getEntryByField(table, data, field) {
     // Check if table, data and field is provided
     if (Helper.isEmpty(table) || Helper.isEmpty(data) || Helper.isEmpty(field)) {
@@ -88,6 +95,67 @@ async function getEntryByField(table, data, field) {
     });
 }
 
+/**
+ * Get entry in database by field
+ * 
+ * @param {*} table 
+ * @param {*} field 
+ * @returns 
+ */
+async function getAllByField(table, field) {
+    if (Helper.isEmpty(table) || Helper.isEmpty(field)) {
+        return false;
+    }
+
+    return new Promise((resolve,reject) => {
+        let stmt = `SELECT distinct ${field} FROM ${table}`;
+        //let stmtvalues = [field];
+
+        connection.query(stmt, (error, results, field) => {
+            if (error) {
+                reject(console.error(error.message));
+            }
+
+            resolve(results);
+        });
+    });
+}
+
+/**
+ * Get Entry in database by id and field
+ * 
+ * @param {*} table 
+ * @param {*} id 
+ * @param {*} field 
+ * @returns 
+ */
+async function getEntryByIdField(table, id, field) {
+    if (Helper.isEmpty(table) || Helper.isEmpty(id) || Helper.isEmpty(field)) {
+        return false;
+    }
+
+    return new Promise((resolve,reject) => {
+        let stmt = `SELECT ${field} FROM ${table} WHERE id = ?`;
+        let stmtvalues = [id];
+
+        connection.query(stmt, stmtvalues, (error, results, field) => {
+            if (error) {
+                reject(console.error(error.message));
+            }
+
+            resolve(results);
+        });
+    });
+}
+
+/**
+ * Update entry in database given data and id
+ * 
+ * @param {*} table 
+ * @param {*} id 
+ * @param {*} data 
+ * @returns 
+ */
 async function updateEntryByID(table, id, data) {
     var MediaData = [];
     var FieldName = data[0].field;
@@ -121,6 +189,8 @@ async function updateEntryByID(table, id, data) {
         return false;
     }
 
+    FieldValue = FieldValue.toLowerCase();
+
     return new Promise((resolve, reject) => {
         let stmt = `UPDATE ${table} SET ${FieldName} = ? WHERE id = ?`;
         let stmtvalue = [FieldValue, id];
@@ -138,7 +208,13 @@ async function updateEntryByID(table, id, data) {
     });
 }
 
-
+/**
+ * Delete entry from database given a specific id
+ * 
+ * @param {*} table 
+ * @param {*} id 
+ * @returns 
+ */
 async function deleteEntryByID(table, id) {
     var EntryData = [];
 
@@ -168,6 +244,13 @@ async function deleteEntryByID(table, id) {
     });
 }
 
+/**
+ * Insert New Entry into database, table with data
+ * 
+ * @param {} table 
+ * @param {*} data 
+ * @returns 
+ */
 async function newEntry(table, data) {
     var RequestBody = data;
     var fieldnames = RequestBody[0].fieldnames;
@@ -193,20 +276,19 @@ async function newEntry(table, data) {
             return false;
         }
     }
-    
+    const lower = fieldvalues.map(element => {
+        return element.toLowerCase();
+    });
     return new Promise((resolve, reject) => {
         let stmt = `INSERT INTO ${table} (${fieldnames}) VALUES (?)`;
-        let stmtvalues = [fieldvalues]
-
-        console.log(sqlstring.format(stmt, stmtvalues));
+        let stmtvalues = [lower]
         
         connection.query(stmt, stmtvalues, (error, results, fields) => {
 
             if (error) {
-                console.log(sqlstring.format(stmt, stmtvalues));
                 reject(console.error(error.message));
             }
-            console.log(sqlstring.format(stmt, stmtvalues));
+
             resolve(results);
         });
     });
@@ -220,6 +302,8 @@ module.exports = {
     getAll,
     getEntryByID,
     getEntryByField,
+    getAllByField,
+    getEntryByIdField,
     updateEntryByID,
     deleteEntryByID,
     newEntry

@@ -28,7 +28,6 @@
     "jsonwebtoken": "^8.5.1",
     "log-timestamp": "^0.3.0",
     "mysql": "^2.18.1",
-    "sqlstring": "^2.3.2",
     "validator": "^13.7.0"
   }
 }

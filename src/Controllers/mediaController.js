@@ -129,8 +129,39 @@ const newVinylEntry = async(req, res, next) => {
     }
 };
 
+/**
+ * Get all labels from database
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 const getLabelAll = async(req, res, next) => {
+    var LabelData = [];
 
+    await mediaModel.getLabelAll('media', 'distinct label').then((result) => {
+        LabelData = result;
+    });
+
+    if (helper.isEmpty(LabelData)) {
+        helper.sendResponse(res, 404);
+    } else {
+        helper.sendResponse(res, 200, LabelData);
+    }
+};
+
+const getArtistAll = async(req, res, next) => {
+    var ArtistData = [];
+
+    await mediaModel.getArtistAll('media', 'distinct artist').then((result) => {
+        ArtistData = result;
+    });
+
+    if (helper.isEmpty(ArtistData)) {
+        helper.sendResponse(res, 404);
+    } else {
+        helper.sendResponse(res, 200, ArtistData);
+    }
 };
 
 module.exports = {
@@ -146,5 +177,10 @@ module.exports = {
     /**
      * Label
      */
-    getLabelAll
+    getLabelAll,
+    
+    /**
+     * Artist
+     */
+     getArtistAll
 }

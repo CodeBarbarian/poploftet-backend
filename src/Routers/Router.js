@@ -8,6 +8,7 @@ const router = express.Router();
  * Including the controllers
  */
 const MediaController = require('../Controllers/mediaController');
+const ExtensionCntroller = require('../Controllers/extensionController');
 
 /**
  * All the routes
@@ -24,9 +25,9 @@ router.delete('/vinyl/:id', MediaController.deleteVinylByID);
 router.get('/label', MediaController.getLabelAll);
 
 // Artists
-//router.get('artists', MediaController.getArtistAll);
+router.get('/artist', MediaController.getArtistAll);
 
-// Song
+// Song -- Extension
 
 
 

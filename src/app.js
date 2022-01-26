@@ -9,9 +9,9 @@ require('log-timestamp');
 // Middleware allows us to access the request.body.<params>
 app.use(express.json());
 
-/*
-const tokenValidator = require('./Models/tokenModel');
+const tokenValidator = require('./Library/token');
 
+/*
 app.use(tokenValidator.validateToken);
 
 https://expressjs.com/en/advanced/best-practice-security.html

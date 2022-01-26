@@ -101,20 +101,7 @@ const deleteVinylByID = async(table, id) => {
  */
 const newVinylEntry = async(table, data) => {
     var MediaData = [];
-    var FieldData = [];
     var EanData = [];
-
-    var FieldName = data[0].fieldnames.indexOf('name');
-    var FieldNameValue = data[0].fieldvalues[FieldName];
-
-    // Check if the name exists before
-    await database.getEntryByField(table, FieldNameValue, 'name').then((result) => {
-        FieldData = result;
-    })
-
-    if (!helper.isEmpty(FieldData)) {
-        return false;
-    }
 
     var FieldEan = data[0].fieldnames.indexOf('ean');
     var FieldEanValue = data[0].fieldvalues[FieldEan];
@@ -135,9 +122,40 @@ const newVinylEntry = async(table, data) => {
     return MediaData;
 };
 
-const getLabelAll = async(table) => {
+/**
+ * Get all the labels
+ * 
+ * @param {*} table 
+ * @param {*} field 
+ * @returns 
+ */
+const getLabelAll = async(table, field) => {
+    var LabelData = [];
 
+    await database.getAllByField(table, field).then((result) => {
+        LabelData = result;
+    });
+
+    if (helper.isEmpty(LabelData)) {
+        return false;
+    } else {
+        return LabelData;
+    }
 };
+
+const getArtistAll = async(table, field) => {
+    var ArtistData = [];
+
+    await database.getAllByField(table, field).then((result) => {
+        ArtistData = result;
+    });
+
+    if (helper.isEmpty(ArtistData)) {
+        return false;
+    } else {
+        return ArtistData;
+    }
+}
 
 module.exports = {
     /**
@@ -147,7 +165,17 @@ module.exports = {
     getVinylByID,
     updateVinylByID,
     deleteVinylByID,
-    newVinylEntry
+    newVinylEntry,
+
+    /**
+     * All Label Functions
+     */
+     getLabelAll,
+
+     /**
+      * All Artist functions
+      */
+      getArtistAll
 
 
 }
