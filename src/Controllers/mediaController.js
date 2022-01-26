@@ -76,7 +76,7 @@ const updateVinylByID = async(req, res, next) => {
         if (helper.isEmpty(MediaData)) {
             helper.sendResponse(res, 400);
         } else {
-            helper.sendResponse(res, 200, MediaData);
+            helper.sendResponse(res, 202, MediaData);
         }
     }
 };

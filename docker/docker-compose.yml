@@ -13,3 +13,9 @@ services:
       - ./database/storage:/var/lib/mysql
     ports:
       - "3306:3306"
+    networks:
+      - host
+
+networks:
+  host:
+    external: false

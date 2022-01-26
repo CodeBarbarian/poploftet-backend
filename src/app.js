@@ -1,3 +1,6 @@
+// Access to environment
+require('dotenv').config();
+
 /**
  * Include required modules
  */
@@ -9,8 +12,9 @@ const Router = require('./Routers/Router')
 /**
  * Other Require
  */
-require('dotenv').config();
 require('log-timestamp');
+// Running Preflight
+require('./Library/preflight');
 
 // Middleware allows us to access the request.body.<params>
 app.use(express.json());

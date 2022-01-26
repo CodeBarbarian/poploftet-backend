@@ -102,7 +102,20 @@
 <!-- GETTING STARTED -->
 ## Getting Started
 
-n/a
+Use the authentication server: https://github.com/codebarbarian/authentication-server
+
+```text
+PORT=8080
+
+APPLICATION_STATE=production
+
+ACCESS_TOKEN_SECRET=woopwoop
+
+DB_HOSTNAME=127.0.0.1
+DB_USERNAME=developer
+DB_PASSWORD=developer
+DB_DATABASE=developer
+```
 
 ### Prerequisites
 

@@ -4,6 +4,7 @@
 const Helper = require('./haugstad');
 let mysql = require('mysql');
 const Validator = require('validator');
+const sqlstring = require('sqlstring');
 
 /**
  * Let us just connect to the mysql database
@@ -255,7 +256,7 @@ async function newEntry(table, data) {
     var RequestBody = data;
     var fieldnames = RequestBody[0].fieldnames;
     var fieldvalues = RequestBody[0].fieldvalues;
-    
+    console.log(fieldvalues);
     if (Helper.isEmpty(table) || Helper.isEmpty(RequestBody)) {
         return false;
     }
@@ -264,7 +265,6 @@ async function newEntry(table, data) {
     if (fieldnames.length !== fieldvalues.length) {
         return false;
     }
-
 
     // Check if all the fieldnames pass validation
     for(let i=0; i < fieldnames.length; i++) {
@@ -276,13 +276,19 @@ async function newEntry(table, data) {
             return false;
         }
     }
+  
     const lower = fieldvalues.map(element => {
-        return element.toLowerCase();
+        if (typeof(element) === "string") {
+            return element.toLowerCase();
+        } else {
+            return element;
+        }
     });
+
     return new Promise((resolve, reject) => {
         let stmt = `INSERT INTO ${table} (${fieldnames}) VALUES (?)`;
         let stmtvalues = [lower]
-        
+        console.log(sqlstring.format(stmt, stmtvalues));
         connection.query(stmt, stmtvalues, (error, results, fields) => {
 
             if (error) {
@@ -293,6 +299,7 @@ async function newEntry(table, data) {
         });
     });
 }
+
 
 
 

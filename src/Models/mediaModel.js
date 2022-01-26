@@ -46,7 +46,7 @@ const updateVinylByID = async(table, id, request) => {
     var MediaData = [];
     var CheckData = [];
     
-    await database.getEntryByID(table, id, request).then((result) => {
+    await database.getEntryByID(table, id).then((result) => {
         CheckData = result;
     });
 
@@ -56,7 +56,7 @@ const updateVinylByID = async(table, id, request) => {
         await database.updateEntryByID(table, id, request).then((result) => {
             MediaData = result;
         });
-    
+
         return MediaData;
     }
 };

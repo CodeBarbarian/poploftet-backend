@@ -8,7 +8,7 @@ const router = express.Router();
  * Including the controllers
  */
 const MediaController = require('../Controllers/mediaController');
-const ExtensionCntroller = require('../Controllers/extensionController');
+const ExtensionCntroller = require('../Controllers/extensionController'); // Used for songs
 
 /**
  * All the routes
@@ -28,7 +28,11 @@ router.get('/label', MediaController.getLabelAll);
 router.get('/artist', MediaController.getArtistAll);
 
 // Song -- Extension
-
+router.get('/song', ExtensionCntroller.getSongAll);
+router.get('/song/:id', ExtensionCntroller.getSongByID);
+router.post('/song/', ExtensionCntroller.newSongEntry);
+router.put('/song/:id', ExtensionCntroller.updateSongByID);
+router.delete('/song/:id', ExtensionCntroller.deleteSongByID);
 
 
 /**

@@ -7,3 +7,6 @@ CREATE TABLE `developer`.`media_ext` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Media Table Extension - Used for songs';
+
+ALTER TABLE `developer`.`media_ext` 
+CHANGE COLUMN `order` `mediaorder` INT(11) NOT NULL ;
