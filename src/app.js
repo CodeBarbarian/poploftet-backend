@@ -6,8 +6,12 @@ require('dotenv').config();
  */
 const express = require('express');
 const app = express();
+const cors = require("cors");
 const tokenValidator = require('./Library/token');
 const Router = require('./Routers/Router')
+const swaggerUI = require("swagger-ui-express");
+
+
 
 /**
  * Other Require
@@ -18,6 +22,12 @@ require('./Library/preflight');
 
 // Middleware allows us to access the request.body.<params>
 app.use(express.json());
+
+// Cross Origin
+app.use(cors());
+
+// URL Encode
+app.use(express.urlencoded({extended:false}));
 
 /**
  * Environemnt switch for production
@@ -47,9 +57,8 @@ app.use('/api/v1', Router);
 /**
  * Default route to display swagger
  */
-app.use('/api/v1', (req, res, next) => {
-    res.json(["display the swagger-ui"]);
-})
+app.use('/api/v1', swaggerUI.serve,swaggerUI.setup(require('./swagger-docs/basic.json')));
+
 
 // Retrieve the port number from the configuration file
 const PORT = process.env.PORT;
