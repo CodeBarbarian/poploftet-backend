@@ -11,8 +11,14 @@ app.use(express.json());
 
 const tokenValidator = require('./Library/token');
 
+if (process.env.APPLICATION_STATE === 'production') {
+    console.log("Poploftet-Backend is starting in production mode with Authentication")
+    app.use(tokenValidator.validateToken);
+} else {
+    console.log("Poploftet-Backend is starting in development mode without Authentication")
+}
 /*
-app.use(tokenValidator.validateToken);
+
 
 https://expressjs.com/en/advanced/best-practice-security.html
 Implement helmet
