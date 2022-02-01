@@ -1,3 +1,16 @@
+/**
+ * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ *  @name:      Poploftet-Backend
+ *  @version:   1.0
+ *  @author:    Morten Haugstad
+ *  @description: Backend for Poploftet
+ * 
+ *  @file: extensionModel.js
+ *  @description: Model for the Extension Controller. Takes care of all data to controller operations.
+ * 
+ * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ */
+
 const database = require('../Library/database');
 const helper = require('../Library/haugstad');
 

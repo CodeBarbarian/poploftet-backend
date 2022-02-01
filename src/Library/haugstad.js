@@ -1,3 +1,16 @@
+/**
+ * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ *  @name:      Poploftet-Backend
+ *  @version:   1.0
+ *  @author:    Morten Haugstad
+ *  @description: Backend for Poploftet
+ * 
+ *  @file: haugstad.js
+ *  @description: Library function. Helper functions for writing javascript applications.
+ * 
+ * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ */
+
 const Template = require('./template');
 
 /**

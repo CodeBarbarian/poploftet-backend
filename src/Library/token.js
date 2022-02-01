@@ -1,3 +1,16 @@
+/**
+ * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ *  @name:      Poploftet-Backend
+ *  @version:   1.0
+ *  @author:    Morten Haugstad
+ *  @description: Backend for Poploftet
+ * 
+ *  @file: token.js
+ *  @description: Library function. Allows us to use JWT authentication.
+ * 
+ * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ */
+
 const jwt = require('jsonwebtoken');
 
 

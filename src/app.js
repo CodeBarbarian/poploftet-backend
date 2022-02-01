@@ -6,6 +6,11 @@
  *  @description: Backend for Poploftet
  * 
  *  @file: app.js
+ * 
+ * 
+ *  @changelog
+ *      01/02/2022:
+ *          - Added some documentation to the different requires
  * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
  */
 
@@ -19,30 +24,51 @@
  * Include required modules
  */
 const express = require('express');
-const app = express();
 const cors = require("cors");
 const tokenValidator = require('./Library/token');
 const Router = require('./Routers/Router')
 const swaggerUI = require("swagger-ui-express");
 const helmet = require('helmet');
+const morgan = require('morgan')
 
 /**
- * Other Require
+ * Set app = express
+ */
+const app = express();
+
+/**
+ * Requiring log-timestamp to get timestamps on all console logs
  */
 require('log-timestamp');
-// Running Preflight
+
+/**
+ * Preflight check before actually doing anything
+ */
 require('./Library/preflight');
 
-// Midleware for 
+/**
+ * Use Morgan for logging
+ */
+app.use(morgan('combined'))
+
+/**
+ * Security Middleware
+ */
 app.use(helmet());
 
-// Middleware allows us to access the request.body.<params>
+/**
+ * Middleware allows us to access the request.body.<params>
+ */
 app.use(express.json());
 
-// Cross Origin
+/**
+ * Middleware use CORS
+ */
 app.use(cors());
 
-// URL Encode
+/**
+ * Middleware to use urlencode
+ */
 app.use(express.urlencoded({extended:false}));
 
 /**
@@ -57,7 +83,9 @@ if (process.env.APPLICATION_STATE === 'production') {
     console.log("Poploftet-Backend is starting in development mode without Authentication");
 }
 
-// Allows the API to use them
+/**
+ * Sett which router to use
+ */
 app.use('/api/v1', Router);
 
 /**
@@ -66,7 +94,9 @@ app.use('/api/v1', Router);
 app.use('/api/v1', swaggerUI.serve,swaggerUI.setup(require('./swagger-docs/basic.json')));
 
 
-// Retrieve the port number from the configuration file
+/**
+ * Get the port from the environment
+ */
 const PORT = process.env.PORT;
 
 /**
