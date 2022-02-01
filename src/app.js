@@ -1,5 +1,19 @@
-// Access to environment
-require('dotenv').config();
+/**
+ * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ *  @name:      Poploftet-Backend
+ *  @version:   1.0
+ *  @author:    Morten Haugstad
+ *  @description: Backend for Poploftet
+ * 
+ *  @file: app.js
+ * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ */
+
+/**
+ * The ability to pull params from .env file
+ */
+ require('dotenv').config();
+
 
 /**
  * Include required modules
@@ -10,8 +24,7 @@ const cors = require("cors");
 const tokenValidator = require('./Library/token');
 const Router = require('./Routers/Router')
 const swaggerUI = require("swagger-ui-express");
-
-
+const helmet = require('helmet');
 
 /**
  * Other Require
@@ -19,6 +32,9 @@ const swaggerUI = require("swagger-ui-express");
 require('log-timestamp');
 // Running Preflight
 require('./Library/preflight');
+
+// Midleware for 
+app.use(helmet());
 
 // Middleware allows us to access the request.body.<params>
 app.use(express.json());
@@ -40,16 +56,6 @@ if (process.env.APPLICATION_STATE === 'production') {
 } else {
     console.log("Poploftet-Backend is starting in development mode without Authentication");
 }
-
-/*
-https://expressjs.com/en/advanced/best-practice-security.html
-Implement helmet
-
-Securing Nodejs applications
-https://dev.to/shaikhshahid/a-guide-to-securing-node-js-applications-4bcc
-*/
-// Including the router
-
 
 // Allows the API to use them
 app.use('/api/v1', Router);
